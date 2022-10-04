@@ -1,26 +1,50 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <header-app :username="name" @usernameWasReset="name = $event"></header-app>
+    {{ status }}
+    <button @click="changeUsername()">change</button>
+    <server-status></server-status>
+    <FooterApp :logo="logo"></FooterApp>
+  </div>
+<child-app :resetFn="callbackUser"></child-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ServerStatus from "@/components/ServerStatus";
+import FooterApp from "@/components/shared/Footer";
+import HeaderApp from "@/components/shared/Header";
+import ChildApp from "@/components/ChildApp";
 export default {
   name: 'App',
+  data:function (){
+    return {
+      status:'very good',
+      name:'arman',
+      logo:'my logo'
+    }
+  },
   components: {
-    HelloWorld
+    ChildApp,
+    HeaderApp,
+    FooterApp,
+    ServerStatus,
+    //send from parent to child
+
+  },
+  methods:{
+    changeUsername(){
+      this.name = 'change username'
+    },
+    callbackUser(){
+      this.name = 'ishopsaz'
+    }
+
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
+
+
